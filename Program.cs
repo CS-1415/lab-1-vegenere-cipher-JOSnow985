@@ -49,6 +49,13 @@ static char ShiftLetter(char charInput, char charKey)
         return (char)intShifted;
 }
 
+// Takes two strings and shifts the first string letter by letter using the second string
+static string ShiftMessage(string strInput, string strKey)
+{
+    string strShifted = "placeholder";
+    return strShifted;
+}
+
 // Tests for the Lowercase method
 static void TestIsLowercaseLetter()
 {
