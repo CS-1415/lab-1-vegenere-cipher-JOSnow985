@@ -9,12 +9,36 @@ TestShiftMessage();
 // Main Driver(?)
 Console.Clear();
 Console.WriteLine("Let's encrypt a message using the Vigenere method!");
-Console.WriteLine("Please give us a message to encrypt:");
-string userMessage = Console.ReadLine();
-Console.WriteLine("Please enter the encryption key you want to use:");
-string userKey = Console.ReadLine();
-Console.WriteLine($"Your message: {userMessage}");
-Console.WriteLine($"Your encryption key: {userKey}");
+
+// Collect a valid user input to shift before continuing
+bool inputValidated = false;
+string userMessage = "";
+while (inputValidated == false)
+{
+    Console.WriteLine("Please give us a message to encrypt:");
+    userMessage = Console.ReadLine();
+    if (string.IsNullOrEmpty(userMessage) == false)
+        inputValidated = IsValidInput(userMessage);
+    if (inputValidated == false)
+        Console.WriteLine("Sorry, we can only use lower-case letters!");
+}
+
+// Same as above but for the key this time
+inputValidated = false;
+string userKey = "";
+while (inputValidated == false)
+{
+    Console.WriteLine("Please enter the encryption key you want to use:");
+    userKey = Console.ReadLine();
+    if (string.IsNullOrEmpty(userKey) == false)
+        inputValidated = IsValidInput(userKey);
+    if (inputValidated == false)
+        Console.WriteLine("Sorry, we can only use lower-case letters!");
+}
+
+// Run user inputs through the ShiftMessage method and display it
+string shiftedMessage = ShiftMessage(userMessage, userKey);
+Console.WriteLine($"Here is your encrypted message: {shiftedMessage}");
 
 // Methods
 // Checks the given character and returns true if lowercase, false otherwise
