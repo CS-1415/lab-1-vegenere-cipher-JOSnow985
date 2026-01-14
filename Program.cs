@@ -64,3 +64,16 @@ static void TestIsValidInput()
     Debug.Assert(!IsValidInput("5U1*3R"));
     Debug.Assert(!IsValidInput(" apple"));
 }
+
+// Tests for ShiftLetter method
+static void TestShiftLetter()
+{
+    // True
+    Debug.Assert(ShiftLetter('g','a') == 'g');
+    Debug.Assert(ShiftLetter('x','f') == 'c');
+    Debug.Assert(ShiftLetter('t','u') == 'n');
+    // False
+    Debug.Assert(ShiftLetter('a','a') != 'b');
+    Debug.Assert(ShiftLetter('a','l') != 'k');
+    Debug.Assert(ShiftLetter('j','k') != 's');
+}
