@@ -21,6 +21,12 @@ static bool IsLowercaseLetter(char c)
         return false;
 }
 
+// Checks passed string to make sure it only contains lowercase letters
+static bool IsValidInput(string str)
+{
+    return false;
+}
+
 // Tests for the Lowercase method
 static void TestIsLowercaseLetter()
 {
