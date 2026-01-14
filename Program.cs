@@ -1,4 +1,6 @@
-﻿Console.Clear();
+﻿using System.Diagnostics;
+
+Console.Clear();
 Console.WriteLine("Let's encrypt a message using the Vigenere method!");
 Console.WriteLine("Please give us a message to encrypt:");
 string userMessage = Console.ReadLine();
@@ -11,4 +13,15 @@ Console.WriteLine($"Your encryption key: {userKey}");
 static bool IsLowercaseLetter(char c)
 {
     return false;
+}
+
+// Tests for the Lowercase method
+static void TestIsLowercaseLetter()
+{
+    Debug.Assert(IsLowercaseLetter('a'));
+    Debug.Assert(IsLowercaseLetter('b'));
+    Debug.Assert(IsLowercaseLetter('z'));
+    Debug.Assert(!IsLowercaseLetter('A'));
+    Debug.Assert(!IsLowercaseLetter('`'));
+    Debug.Assert(!IsLowercaseLetter('{'));
 }
