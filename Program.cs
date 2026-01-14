@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics;
 TestIsLowercaseLetter();
+TestIsValidInput();
 
 Console.Clear();
 Console.WriteLine("Let's encrypt a message using the Vigenere method!");
@@ -21,10 +22,15 @@ static bool IsLowercaseLetter(char c)
         return false;
 }
 
-// Checks passed string to make sure it only contains lowercase letters
+// Checks each character in the passed string using IsLowercaseLetter, returns false if any fail, otherwise true
 static bool IsValidInput(string str)
 {
-    return false;
+    foreach (char c in str)
+    {
+        if (IsLowercaseLetter(c) == false)
+            return false;
+    }
+    return true;
 }
 
 // Tests for the Lowercase method
