@@ -94,3 +94,11 @@ static void TestShiftLetter()
     Debug.Assert(ShiftLetter('a','l') != 'k');
     Debug.Assert(ShiftLetter('j','k') != 's');
 }
+
+static void TestShiftMessage()
+{
+    // True
+    Debug.Assert(ShiftMessage("endzz", "b") == "foeaa");
+    Debug.Assert(ShiftMessage("apple", "bcb") == "brqmg");
+    Debug.Assert(ShiftMessage("zero", "o") == "bqqmf");
+}
