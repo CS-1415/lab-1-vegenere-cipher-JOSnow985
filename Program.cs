@@ -33,6 +33,12 @@ static bool IsValidInput(string str)
     return true;
 }
 
+// Shifts a passed message character using a passed key character, returning the resulting character
+static char ShiftLetter(char cMsg, char cKey)
+{
+    return 'a';
+}
+
 // Tests for the Lowercase method
 static void TestIsLowercaseLetter()
 {
