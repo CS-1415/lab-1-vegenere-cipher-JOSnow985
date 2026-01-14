@@ -2,6 +2,7 @@
 using System.Text;
 // Tests
 TestIsLowercaseLetter();
+TestIsPrintableChar();
 TestIsValidInput();
 TestShiftLetter();
 TestShiftMessage();
@@ -9,6 +10,7 @@ TestShiftMessage();
 // Main Driver(?)
 Console.Clear();
 Console.WriteLine("Let's encrypt a message using the Vigenere method!");
+Console.WriteLine("You can enter any \"printable\" ASCII character but only lower-case letters will be encrypted.");
 
 // Collect a valid user input to shift before continuing
 bool inputValidated = false;
@@ -17,10 +19,10 @@ while (inputValidated == false)
 {
     Console.WriteLine("Please give us a message to encrypt:");
     userMessage = Console.ReadLine();
-    if (string.IsNullOrEmpty(userMessage) == false)
+    if (string.IsNullOrEmpty(userMessage) == false)     // Don't want Null or Empty!
         inputValidated = IsValidInput(userMessage);
     if (inputValidated == false)
-        Console.WriteLine("Sorry, we can only use lower-case letters!");
+        Console.WriteLine("Sorry, we need at least one lower-case letter!");
 }
 
 // Same as above but for the key this time
@@ -33,7 +35,7 @@ while (inputValidated == false)
     if (string.IsNullOrEmpty(userKey) == false)
         inputValidated = IsValidInput(userKey);
     if (inputValidated == false)
-        Console.WriteLine("Sorry, we can only use lower-case letters!");
+        Console.WriteLine("Sorry, we need at least one lower-case letter!");
 }
 
 // Run user inputs through the ShiftMessage method and display it
@@ -52,15 +54,33 @@ static bool IsLowercaseLetter(char c)
         return false;
 }
 
-// Checks each character in the passed string using IsLowercaseLetter, returns false if any fail, otherwise true
+// Checks the given character and returns true if it's a printable character
+static bool IsPrintableChar(char c)
+{
+    if (c >= 32 && c <= 126)
+    {
+        return true;
+    }
+    else
+        return false;
+}
+
+
+// Checks each character in the passed string, returns fail if any character is not printable, then true if at least one is lowercase
 static bool IsValidInput(string str)
 {
     foreach (char c in str)
     {
-        if (IsLowercaseLetter(c) == false)
+        if (IsPrintableChar(c) == false)
             return false;
     }
-    return true;
+    foreach (char c in str)
+    {
+        IsLowercaseLetter(c);
+        if (IsLowercaseLetter(c) == true)
+            return true;
+    }
+    return false;
 }
 
 // Shifts a passed message character using a passed key character, returning the resulting character
@@ -79,15 +99,25 @@ static char ShiftLetter(char charInput, char charKey)
 static string ShiftMessage(string strInput, string strKey)
 {
     var shiftedBuilder = new StringBuilder();
-    for (int i = 0; i < strInput.Length;)
+    int i = 0;
+    while (i < strInput.Length)
     {
         foreach (char letter in strKey)
         {
+            // While the current index isn't a lower-case letter, 
+            // append the character and increase index, so we don't "waste" a key char
+            while (i < strInput.Length && IsLowercaseLetter(strInput[i]) == false)
+            {
+                shiftedBuilder.Append(strInput[i]);
+                i++;
+            }
+
+            // Reaching this code while the index is viable will shift and append
             if (i < strInput.Length)
             {
                 shiftedBuilder.Append(ShiftLetter(strInput[i], letter));
+                i++;
             }
-            i++;
         }
     }
     return shiftedBuilder.ToString();
@@ -106,6 +136,18 @@ static void TestIsLowercaseLetter()
     Debug.Assert(!IsLowercaseLetter('{'));
 }
 
+// Tests for IsPrintableChar method
+static void TestIsPrintableChar()
+{
+    // True
+    Debug.Assert(IsPrintableChar('a'));
+    Debug.Assert(IsPrintableChar('~'));
+    Debug.Assert(IsPrintableChar(' '));
+    // False
+    Debug.Assert(!IsPrintableChar((char)128));
+    Debug.Assert(!IsPrintableChar((char)189));
+}
+
 // Tests for IsValidInput method
 static void TestIsValidInput()
 {
@@ -113,10 +155,12 @@ static void TestIsValidInput()
     Debug.Assert(IsValidInput("apple"));
     Debug.Assert(IsValidInput("spaceship"));
     Debug.Assert(IsValidInput("structure"));
+    Debug.Assert(IsValidInput("FaCtOR"));
+    Debug.Assert(IsValidInput(" apple"));
     // False
-    Debug.Assert(!IsValidInput("FaCtOR"));
     Debug.Assert(!IsValidInput("5U1*3R"));
-    Debug.Assert(!IsValidInput(" apple"));
+    Debug.Assert(!IsValidInput("APPLE"));
+    Debug.Assert(!IsValidInput(" "));
 }
 
 // Tests for ShiftLetter method
@@ -132,6 +176,7 @@ static void TestShiftLetter()
     Debug.Assert(ShiftLetter('j','k') != 's');
 }
 
+// Tests for ShiftMessage method
 static void TestShiftMessage()
 {
     // True
