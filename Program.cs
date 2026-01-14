@@ -30,10 +30,25 @@ static bool IsValidInput(string str)
 // Tests for the Lowercase method
 static void TestIsLowercaseLetter()
 {
+    // True
     Debug.Assert(IsLowercaseLetter('a'));
     Debug.Assert(IsLowercaseLetter('b'));
     Debug.Assert(IsLowercaseLetter('z'));
+    // False
     Debug.Assert(!IsLowercaseLetter('A'));
     Debug.Assert(!IsLowercaseLetter('`'));
     Debug.Assert(!IsLowercaseLetter('{'));
+}
+
+// Tests for IsValidInput method
+static void TestIsValidInput()
+{
+    // True
+    Debug.Assert(IsValidInput("apple"));
+    Debug.Assert(IsValidInput("spaceship"));
+    Debug.Assert(IsValidInput("apple"));
+    // False
+    Debug.Assert(!IsValidInput("FaCtOR"));
+    Debug.Assert(!IsValidInput("5U1*3R"));
+    Debug.Assert(!IsValidInput(" apple"));
 }
