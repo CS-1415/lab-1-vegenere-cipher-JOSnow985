@@ -1,7 +1,10 @@
 ﻿using System.Diagnostics;
+// Tests
 TestIsLowercaseLetter();
 TestIsValidInput();
+TestShiftLetter();
 
+// Main Driver(?)
 Console.Clear();
 Console.WriteLine("Let's encrypt a message using the Vigenere method!");
 Console.WriteLine("Please give us a message to encrypt:");
@@ -11,6 +14,7 @@ string userKey = Console.ReadLine();
 Console.WriteLine($"Your message: {userMessage}");
 Console.WriteLine($"Your encryption key: {userKey}");
 
+// Methods
 // Checks the given character and returns true if lowercase, false otherwise
 static bool IsLowercaseLetter(char c)
 {
@@ -34,9 +38,15 @@ static bool IsValidInput(string str)
 }
 
 // Shifts a passed message character using a passed key character, returning the resulting character
-static char ShiftLetter(char cMsg, char cKey)
+static char ShiftLetter(char charInput, char charKey)
 {
-    return 'a';
+    // Offset by -97 to line up the key to 0-25, zero indexed lower case alphabet
+    int intShifted = charInput + charKey - 97;
+    // If the character value exceeds z, we want to wrap back to 97, 'a', 26 letters so subtract 26.
+    if (intShifted > 122)
+        return (char)(intShifted - 26); 
+    else
+        return (char)intShifted;
 }
 
 // Tests for the Lowercase method
