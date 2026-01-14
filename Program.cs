@@ -1,8 +1,10 @@
 ﻿using System.Diagnostics;
+using System.Text;
 // Tests
 TestIsLowercaseLetter();
 TestIsValidInput();
 TestShiftLetter();
+TestShiftMessage();
 
 // Main Driver(?)
 Console.Clear();
@@ -52,8 +54,19 @@ static char ShiftLetter(char charInput, char charKey)
 // Takes two strings and shifts the first string letter by letter using the second string
 static string ShiftMessage(string strInput, string strKey)
 {
-    string strShifted = "placeholder";
-    return strShifted;
+    var shiftedBuilder = new StringBuilder();
+    for (int i = 0; i < strInput.Length;)
+    {
+        foreach (char letter in strKey)
+        {
+            if (i < strInput.Length)
+            {
+                shiftedBuilder.Append(ShiftLetter(strInput[i], letter));
+            }
+            i++;
+        }
+    }
+    return shiftedBuilder.ToString();
 }
 
 // Tests for the Lowercase method
@@ -75,7 +88,7 @@ static void TestIsValidInput()
     // True
     Debug.Assert(IsValidInput("apple"));
     Debug.Assert(IsValidInput("spaceship"));
-    Debug.Assert(IsValidInput("apple"));
+    Debug.Assert(IsValidInput("structure"));
     // False
     Debug.Assert(!IsValidInput("FaCtOR"));
     Debug.Assert(!IsValidInput("5U1*3R"));
@@ -100,5 +113,6 @@ static void TestShiftMessage()
     // True
     Debug.Assert(ShiftMessage("endzz", "b") == "foeaa");
     Debug.Assert(ShiftMessage("apple", "bcb") == "brqmg");
-    Debug.Assert(ShiftMessage("zero", "o") == "bqqmf");
+    Debug.Assert(ShiftMessage("spaceship", "wombat") == "odmdeldwb");
+    Debug.Assert(ShiftMessage("zelda", "macncheese") == "lenqc");
 }
